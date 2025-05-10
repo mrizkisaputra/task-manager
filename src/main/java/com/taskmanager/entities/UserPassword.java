@@ -3,32 +3,23 @@ package com.taskmanager.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-@Entity
+@Entity @Table(name = "s_password")
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class Task {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+public class UserPassword {
+    @Id
+    @Column(name = "id_user")
     private String id;
 
-    @NotNull @NotEmpty @Size(min = 3, max = 100)
-    private String title;
+    @NotNull
+    @NotEmpty
+    private String password;
 
-    @Size(max = 255)
-    private String description;
-
-    @Enumerated(EnumType.STRING)
-    private StatusTask status;
-
-    private LocalDate dueDate;
-
-    @ManyToOne
+    @OneToOne() @MapsId
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private Users user;
 }

@@ -13,7 +13,7 @@ services:
     environment:
       - POSTGRES_DB=taskmanagerdb
       - POSTGRES_USER=taskmanager
-      - POSTGRES_PASSWORD=1nIlUpwpRIDnQC9WZdJ
+      - POSTGRES_PASSWORD=taskmanager
     volumes:
       - postgresql-data:/var/lib/postgresql/data
 

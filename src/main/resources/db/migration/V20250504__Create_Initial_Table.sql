@@ -1,15 +1,26 @@
-CREATE TABLE users
+CREATE TABLE s_password
 (
-    id       character varying(255) NOT NULL,
-    email    character varying(100) NOT NULL,
-    name     character varying(100) NOT NULL,
-    password character varying(255) NOT NULL,
-    role     character varying(255),
-    CONSTRAINT users_role_check CHECK (((role)::text = ANY ((ARRAY['USER':: character varying, 'ADMIN':: character varying])::text[])
+    id_user  character varying(255) NOT NULL,
+    password character varying(255) NOT NULL
+);
+
+CREATE TABLE s_roles
+(
+    id   character varying(100) NOT NULL,
+    name character varying(255) NOT NULL,
+    CONSTRAINT s_roles_name_check CHECK (((name)::text = ANY ((ARRAY['ADMIN':: character varying, 'USER':: character varying])::text[])
 ) )
 );
 
-CREATE TABLE tasks
+CREATE TABLE s_users
+(
+    id      character varying(255) NOT NULL,
+    email   character varying(100) NOT NULL,
+    name    character varying(100) NOT NULL,
+    id_role character varying(255)
+);
+
+CREATE TABLE task
 (
     id          character varying(255) NOT NULL,
     description character varying(255),
@@ -17,24 +28,38 @@ CREATE TABLE tasks
     status      character varying(255),
     title       character varying(100) NOT NULL,
     id_user     character varying(255),
-    CONSTRAINT tasks_status_check CHECK (((status)::text = ANY ((ARRAY['TODO':: character varying, 'IN_PROGRESS':: character varying, 'DONE':: character varying])::text[])
+    CONSTRAINT task_status_check CHECK (((status)::text = ANY ((ARRAY['TODO':: character varying, 'IN_PROGRESS':: character varying, 'DONE':: character varying])::text[])
 ) )
 );
 
 --
--- =====================================================Unique Constraint=====================================================
-ALTER TABLE ONLY users
-    ADD CONSTRAINT uk6dotkott2kjsp8vw4d0m25fb7 UNIQUE (email);
+-- ======================================================UNIQUE CONSTRAINT==============================================
+ALTER TABLE ONLY s_users
+    ADD CONSTRAINT uk2lcv26kt28p27enwkw01c2s1g UNIQUE (email);
+
 
 --
--- =====================================================Primary Key=====================================================
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+-- =================================================CONSTRAINT PRIMARY KEY==============================================
+ALTER TABLE ONLY s_password
+    ADD CONSTRAINT s_password_pkey PRIMARY KEY (id_user);
 
-ALTER TABLE ONLY tasks
-    ADD CONSTRAINT tasks_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY s_roles
+    ADD CONSTRAINT s_roles_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY s_users
+    ADD CONSTRAINT s_users_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (id);
 
 --
--- =====================================================Foreign Key=====================================================
-ALTER TABLE ONLY tasks
-    ADD CONSTRAINT fkl78vfuynuac03yavfpfru3sb9 FOREIGN KEY (id_user) REFERENCES public.users(id);
+-- =================================================CONSTRAINT FOREIGN KEY==============================================
+ALTER TABLE ONLY s_users
+    ADD CONSTRAINT fk4k103cqcehdbobgrydgsa44gu FOREIGN KEY (id_role) REFERENCES s_roles(id);
+
+
+ALTER TABLE ONLY s_password
+    ADD CONSTRAINT fk7wur1l3rdr9u3msft1aluptkl FOREIGN KEY (id_user) REFERENCES s_users(id);
+
+ALTER TABLE ONLY task
+    ADD CONSTRAINT fkjvutyaaubcbmkqkh2gx7gk8br FOREIGN KEY (id_user) REFERENCES s_users(id);

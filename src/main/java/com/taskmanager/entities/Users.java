@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity @Table(name = "users")
+@Entity @Table(name = "s_users")
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class User {
+public class Users {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
@@ -30,12 +30,12 @@ public class User {
     @Size(min = 3, max = 100)
     private String email;
 
-    @NotNull
-    @NotEmpty
-    private String password;
+    @OneToOne(mappedBy = "user")
+    private UserPassword userPassword;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @ManyToOne
+    @JoinColumn(name = "id_role", referencedColumnName = "id")
+    private UserRole role;
 
     @OneToMany(mappedBy = "user")
     private List<Task> task;
