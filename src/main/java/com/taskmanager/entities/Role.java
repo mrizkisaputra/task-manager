@@ -1,14 +1,27 @@
 package com.taskmanager.entities;
 
-import lombok.Getter;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public enum Role {
-    ADMIN("ROLE_ADMIN"), USER("ROLE_USER");
+import java.util.List;
 
-    @Getter
-    private String value;
+@Entity
+@Table(name = "s_roles")
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+public class Role {
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @NotNull
+    @Size(max = 100)
+    private String id;
 
-    Role(String value) {
-        this.value = value;
-    }
+    @NotNull @Size(max = 100)
+    private String name;
+
+    @OneToMany(mappedBy = "role")
+    private List<Users> user;
 }

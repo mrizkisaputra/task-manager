@@ -1,5 +1,8 @@
 # Task Manager API
 
+## Schema Database
+![](./skema_database.png)
+
 ## Features
 
 

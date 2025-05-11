@@ -35,7 +35,7 @@ public class Users {
 
     @ManyToOne
     @JoinColumn(name = "id_role", referencedColumnName = "id")
-    private UserRole role;
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private List<Task> task;

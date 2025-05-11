@@ -7,9 +7,7 @@ CREATE TABLE s_password
 CREATE TABLE s_roles
 (
     id   character varying(100) NOT NULL,
-    name character varying(255) NOT NULL,
-    CONSTRAINT s_roles_name_check CHECK (((name)::text = ANY ((ARRAY['ADMIN':: character varying, 'USER':: character varying])::text[])
-) )
+    name character varying(255) NOT NULL
 );
 
 CREATE TABLE s_users
