@@ -1,5 +1,6 @@
 package com.taskmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -24,11 +25,12 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private StatusTask status;
+    private StatusTask status = StatusTask.TODO;
 
     private LocalDate dueDate;
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id")
+    @JsonIgnore
     private Users user;
 }

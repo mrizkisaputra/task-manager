@@ -26,9 +26,10 @@ CREATE TABLE task
     status      character varying(255),
     title       character varying(100) NOT NULL,
     id_user     character varying(255),
-    CONSTRAINT task_status_check CHECK (((status)::text = ANY ((ARRAY['TODO':: character varying, 'IN_PROGRESS':: character varying, 'DONE':: character varying])::text[])
+    CONSTRAINT task_status_check CHECK (((status)::text = ANY (ARRAY[('TODO':: character varying)::text, ('IN_PROGRESS':: character varying)::text, ('DONE':: character varying)::text])
 ) )
 );
+
 
 --
 -- ======================================================UNIQUE CONSTRAINT==============================================
