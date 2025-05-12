@@ -25,6 +25,7 @@ public class ApiSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeConfigurer -> authorizeConfigurer
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/tasks").hasRole("OWNER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .build();
